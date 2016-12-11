@@ -23,17 +23,24 @@ namespace ConsoleApp.Helpers
                 _CheckingThreadId = Thread.CurrentThread.ManagedThreadId;
                 while (!_StopWatching)
                 {
-                    int availableCompletionPortThreads;
-                    int availableWorkerThreads;
-                    ThreadPool.GetAvailableThreads(out availableWorkerThreads, out availableCompletionPortThreads);
-                    int maxCompletionPortThreads;
-                    int maxWorkerThreads;
-                    ThreadPool.GetMaxThreads(out maxWorkerThreads, out maxCompletionPortThreads);
-                    _ThreadsAvailable.Add(new Tuple<DateTime, int>(DateTime.Now, maxWorkerThreads - availableWorkerThreads));
+                    var usedWorkerThreads = ActualUsedWorkerThreads();
+                    _ThreadsAvailable.Add(new Tuple<DateTime, int>(DateTime.Now, usedWorkerThreads));
                     Thread.Sleep(checkingDelay);
                 }
             });
         }
+
+        public int ActualUsedWorkerThreads()
+        {
+            int availableCompletionPortThreads;
+            int availableWorkerThreads;
+            ThreadPool.GetAvailableThreads(out availableWorkerThreads, out availableCompletionPortThreads);
+            int maxCompletionPortThreads;
+            int maxWorkerThreads;
+            ThreadPool.GetMaxThreads(out maxWorkerThreads, out maxCompletionPortThreads);
+            return maxWorkerThreads-availableWorkerThreads;
+        }
+
 
         public void EndWatchingAndLogWatchingResults()
         {
