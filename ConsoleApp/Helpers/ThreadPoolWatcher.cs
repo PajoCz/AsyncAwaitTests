@@ -18,7 +18,10 @@ namespace ConsoleApp.Helpers
             var checkingDelay = p_OverrideCheckingDelay ?? _CheckingDelayDefault;
             _ThreadsAvailable = new List<Tuple<DateTime, int>>();
             _StopWatching = false;
-            Task.Run(() =>
+            //I'm checking ThreadPool using by IO operations at database. So do not use same ThreadPool here for watching
+            //Creating threads is expensive and do not use it at production code - only here for testing ThreadPool using by IO operations
+            new Thread(() =>
+            //Task.Run(() =>
             {
                 _CheckingThreadId = Thread.CurrentThread.ManagedThreadId;
                 while (!_StopWatching)
@@ -27,7 +30,7 @@ namespace ConsoleApp.Helpers
                     _ThreadsAvailable.Add(new Tuple<DateTime, int>(DateTime.Now, usedWorkerThreads));
                     Thread.Sleep(checkingDelay);
                 }
-            });
+            }).Start();
         }
 
         public int ActualUsedWorkerThreads()
