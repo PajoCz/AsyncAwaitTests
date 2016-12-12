@@ -6,12 +6,10 @@ using ConsoleApp.Helpers;
 namespace ConsoleApp
 {
     /// <summary>
-    ///     Klidne v jednom vlaknu volamy ASYNC SQL dotazy - nemam jednotlive awaity v cyklu (serializovaly by se volani), ale
+    ///     Klidne v jednom vlaknu volany ASYNC SQL dotazy - nemam jednotlive awaity v cyklu (serializovaly by se volani), ale
     ///     simuluju si cekani paralelne pomoci Task.WaitAll
-    ///     Volani se tedy zahajuji paralelne a pri cekani na odpoved se vlakno vrati do threadpoolu. Behem dlouheho cekani na
-    ///     SQL odpoved se thready tedy neblokuji. Pri zpracovani async odpovedi se startuji thready z ThreadPoolu na
-    ///     obslouzeni
-    ///     odpovedi SQL
+    ///     Volani se tedy zahajuji paralelne z hlavniho vlakna a potom se hlavni vlakno na Task.WaitAll zablokuje a ceka na asynchronni odpovedi.
+    ///     Jakmile dorazi async odpovedi, tak se zpracovavaji thready z ThreadPoolu (paralelne)
     ///     Toto je vhodny pripad volani na serveru, kdy delam vice IO volani a nenavazuji na sebe a muzu je tedy paralelizovat
     ///     I pokud na serveru delam jen jedno IO volani, vyhodou ze napriklad dlouhym cekanim na odpoved z DB serveru
     ///     neblokuju thread

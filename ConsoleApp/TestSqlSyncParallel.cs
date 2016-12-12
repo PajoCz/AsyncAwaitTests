@@ -10,7 +10,7 @@ namespace ConsoleApp
     ///     Ve vice vlaknech volam SYNC SQL dotaz
     ///     Priklad, kdy volam vice paralelnich volani serveru - ten startuje vice vlaken a obsluhuje pozadavky paralelne
     ///     Ale komunikase s IO jako je DB je synchronni, tedy pri cekani vsech paralelnich vlaken na SQL odpoved se blokuji
-    ///     thready
+    ///     thready - toto zatezuje serverove zdroje
     /// </summary>
     public class TestSqlSyncParallel : TestSqlBase
     {
