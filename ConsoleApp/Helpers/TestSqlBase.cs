@@ -22,7 +22,9 @@ namespace ConsoleApp.Helpers
             var sw = Stopwatch.StartNew();
             var sum = RunImpl(p_CallCount, p_SqlDelay);
             sw.Stop();
-            Logger.LogWithColor($"END {p_Description} {p_CallCount}x sum {sum} elapsed {sw.Elapsed}", ConsoleColor.Red);
+            var calculator = new Calculator();
+            var calculated = calculator.SumNumbersFromOneTo(p_CallCount);
+            Logger.LogWithColor($"END {p_Description} sum response values={sum} (must be {calculated}) elapsed {sw.Elapsed}", ConsoleColor.Red);
             threadPoolWatcher.EndWatchingAndLogWatchingResults();
         }
 

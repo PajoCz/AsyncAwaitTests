@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\Calculator.cs" />
     <Compile Include="Helpers\ConsoleForegroundColorChanger.cs" />
     <Compile Include="Helpers\Logger.cs" />
     <Compile Include="Helpers\SqlCaller.cs" />

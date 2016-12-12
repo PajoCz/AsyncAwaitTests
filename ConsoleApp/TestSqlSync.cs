@@ -18,7 +18,7 @@ namespace ConsoleApp
         protected override int RunImpl(int callCount, TimeSpan sqlDelay)
         {
             List<int> results = new List<int>();
-            for (var i = 0; i < callCount; i++)
+            for (var i = 1; i <= callCount; i++)
             {
                 results.Add(SqlCaller.GetValue(sqlDelay, i));
             }
